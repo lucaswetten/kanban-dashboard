@@ -1,0 +1,12 @@
+{
+  "name": "kanban-dashboard",
+  "private": true,
+  "workspaces": ["frontend", "proxy-server"],
+  "scripts": {
+    "dev": "concurrently \"npm run dev -w frontend\" \"npm run dev -w proxy-server\"",
+    "build": "npm run build -w frontend"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}

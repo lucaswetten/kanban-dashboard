@@ -4,7 +4,7 @@ import Card from './Card'
 import { useBoardStore } from '../../store/boardStore'
 import './Column.css'
 
-export default function Column({ column }) {
+export default function Column({ column, provided, isDragging }) {
   const { cards, addCard, updateColumn, deleteColumn } = useBoardStore()
   const [addingCard, setAddingCard] = useState(false)
   const [newCardTitle, setNewCardTitle] = useState('')
@@ -25,8 +25,12 @@ export default function Column({ column }) {
   }
 
   return (
-    <div className="column">
-      <div className="column-header">
+    <div
+      ref={provided.innerRef}
+      {...provided.draggableProps}
+      className={`column ${isDragging ? 'column--dragging' : ''}`}
+    >
+      <div className="column-header" {...provided.dragHandleProps}>
         {editingTitle ? (
           <input
             className="column-title-input"
@@ -74,7 +78,7 @@ export default function Column({ column }) {
         </div>
       </div>
 
-      <Droppable droppableId={column.id}>
+      <Droppable droppableId={column.id} type="CARD">
         {(provided, snapshot) => (
           <div
             ref={provided.innerRef}

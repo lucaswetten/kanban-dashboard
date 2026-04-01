@@ -150,6 +150,16 @@ export const useBoardStore = create(
         }))
       },
 
+      moveColumn: (fromIndex, toIndex) => {
+        if (fromIndex === toIndex) return
+        set((state) => {
+          const columns = [...state.columns]
+          const [removed] = columns.splice(fromIndex, 1)
+          columns.splice(toIndex, 0, removed)
+          return { columns }
+        })
+      },
+
       updateColumn: (columnId, updates) => {
         set((state) => ({
           columns: state.columns.map((col) =>
